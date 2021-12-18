@@ -1,6 +1,8 @@
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: MIT
 pragma solidity 0.8.10;
 
+/// @title An Example Bar
+/// @dev Example Details Bar
 interface IBar {
     /// @notice Notice of T
     /// @dev Dev of T
@@ -11,9 +13,6 @@ interface IBar {
         address paramB;
     }
 
-    /// @notice Sets a T
-    /// @dev Uses a struct
-    /// @param t T struct FTW
     function set(T memory t) external;
 
     function boop(uint256 bar) external;
@@ -24,8 +23,6 @@ interface IBar {
     event Transfer(uint256 foo);
 
     /// @notice Thrown when doh
-    /// @dev Bad doh error
-    /// @param yay A bool
     error Doh(bool yay);
 }
 
