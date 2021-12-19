@@ -8,19 +8,19 @@ import './type-extensions';
 
 extendConfig(
     (config: HardhatConfig, userConfig: Readonly<HardhatUserConfig>) => {
-      config.outputChecks = {
-        errorMode: userConfig.outputChecks?.errorMode || false,
+      config.outputValidator = {
+        errorMode: userConfig.outputValidator?.errorMode || false,
         checks: {
           title: true,
           details: true,
           compilationWarnings: true,
           missingUserDoc: true,
           missingDevDoc: true,
-          ...(userConfig.outputChecks?.checks || {}),
+          ...(userConfig.outputValidator?.checks || {}),
         },
-        include: userConfig.outputChecks?.include || [],
-        exclude: userConfig.outputChecks?.exclude || [],
-        runOnCompile: userConfig.outputChecks?.runOnCompile || false,
+        include: userConfig.outputValidator?.include || [],
+        exclude: userConfig.outputValidator?.exclude || [],
+        runOnCompile: userConfig.outputValidator?.runOnCompile || false,
       };
     },
 );
@@ -53,7 +53,7 @@ const setupErrors = (fileSource: string, fileName: string) => (errorType: ErrorT
 };
 
 task(TASK_COMPILE, async (args, hre, runSuper) => {
-  const config = hre.config.outputChecks;
+  const config = hre.config.outputValidator;
 
   // Updates the compiler settings
   for (const compiler of hre.config.solidity.compilers) {

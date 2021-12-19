@@ -3,7 +3,7 @@ import { Checks } from "./types";
 
 declare module 'hardhat/types/config' {
   export interface HardhatUserConfig {
-    outputChecks?: {
+    outputValidator?: {
       include?: string[]
       exclude?: string[]
       runOnCompile?: boolean
@@ -13,7 +13,7 @@ declare module 'hardhat/types/config' {
   }
 
   export interface HardhatConfig {
-    outputChecks: {
+    outputValidator: {
       include: string[]
       exclude: string[]
       runOnCompile: boolean

@@ -5,7 +5,7 @@ import './src';
 
 const config: HardhatUserConfig = {
   solidity: '0.8.10',
-  outputChecks: {
+  outputValidator: {
     runOnCompile: true,
     errorMode: true,
   },

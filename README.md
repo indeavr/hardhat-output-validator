@@ -1,4 +1,7 @@
-# Output Checker
+# Output Validator
+
+![version](https://img.shields.io/npm/v/hardhat-output-validator)
+![npm](https://img.shields.io/npm/dt/hardhat-output-validator)
 
 Zero-config Hardhat plugin to check the output of the compiler for any problems.
 
@@ -12,27 +15,27 @@ First thing to do is to install the plugin in your Hardhat project:
 
 ```bash
 # Using yarn
-yarn add hardhat-output-checker
+yarn add hardhat-output-validator
 
 # Or using npm
-npm i hardhat-output-checker
+npm i hardhat-output-validator
 ```
 
 Next step is simply to include the plugin into your `hardhat.config.js` or `hardhat.config.ts` file:
 
 ```typescript
 // Using JavaScript
-require('hardhat-output-checker');
+require('hardhat-output-validator');
 
 // Using ES6 or TypeScript
-import 'hardhat-output-checker';
+import 'hardhat-output-validator';
 ```
 
 And you're done! Documentation will be automatically checked on the next compilation and you'll see the result in your console. :)
 
 ## 📝 Usage
 
-The Output Checker loops through all your Solidity contracts and checks for missing [NatSpec](https://docs.soliditylang.org/en/v0.8.9/natspec-format.html) .
+The Output Validator loops through all your Solidity contracts and checks for missing [NatSpec](https://docs.soliditylang.org/en/v0.8.9/natspec-format.html) .
 For example, given the following function:
 
 ```solidity
@@ -60,11 +63,11 @@ You can change the default settings in your Hardhat config file:
 import { HardhatUserConfig } from 'hardhat/config';
 import '@nomiclabs/hardhat-waffle';
 import '@nomiclabs/hardhat-ethers';
-import 'hardhat-output-checker';
+import 'hardhat-output-validator';
 
 const config: HardhatUserConfig = {
   // ... Your Hardhat config
-  outputChecker: {
+  outputValidator: {
       runOnCompile: true,
       errorMode: true,
       exclude: ['contracts/test-helpers', 'contracts/test-libraries', "IExampleContract"],
