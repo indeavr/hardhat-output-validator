@@ -1,5 +1,5 @@
 {
-  "id": "8a2a00fe14b9df0287d349b3b8229046",
+  "id": "0ce679a940d7c4c857d91b2c767adf84",
   "_format": "hh-sol-build-info-1",
   "solcVersion": "0.8.10",
   "solcLongVersion": "0.8.10+commit.fc410830",
@@ -10,7 +10,7 @@
         "content": "// SPDX-License-Identifier: MIT\r\npragma solidity 0.8.10;\r\n\r\n/// @title An Example Bar\r\n/// @dev Example Details Bar\r\ninterface IBar {\r\n    /// @notice Notice of T\r\n    /// @dev Dev of T\r\n    /// @param paramA A number\r\n    /// @param paramB An address\r\n    struct T {\r\n        uint256 paramA;\r\n        address paramB;\r\n    }\r\n\r\n    function set(T memory t) external;\r\n\r\n    function boop(uint256 bar) external;\r\n\r\n    /// @notice Emitted when transfer\r\n    /// @dev Transfer some stuff\r\n    /// @param foo Amount of stuff\r\n    event Transfer(uint256 foo);\r\n\r\n    /// @notice Thrown when doh\r\n    error Doh(bool yay);\r\n}\r\n\r\n/// @title   Bar contract\r\n/// @author  Primitive\r\n/// @notice  Manages the bar\r\n/// @dev     Blablou\r\ncontract Bar is IBar {\r\n    /// @inheritdoc IBar\r\n    function set(T memory t) external { }\r\n\r\n    /// @notice Cool function bro\r\n    function boop(uint256 bar) external { }\r\n\r\n    /// @notice Baaps the yaps\r\n    /// @param bar Number of bar\r\n    /// @param aar Address of aar\r\n    function baap(uint256 bar, address aar) external { }\r\n}\r\n"
       },
       "contracts/Foo.sol": {
-        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity 0.8.10;\r\n\r\n/// @title An Example Foo\r\n/// @dev Example Details Foo\r\ninterface IFoo {\r\n    /// @notice Returns the nonce of an address\r\n    /// @dev Nonces much\r\n    /// @param _0 Address to inspect\r\n    /// @return Current nonce of the address\r\n    function nonces(address _0) external view returns (uint256);\r\n}\r\n\r\ncontract Foo is IFoo {\r\n    /// @inheritdoc IFoo\r\n    mapping(address => uint256) public override nonces;\r\n}\r\n"
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity 0.8.10;\r\n\r\n/// @title An Example Foo\r\n/// @dev Example Details Foo\r\ninterface IFoo {\r\n    /// @notice Returns the nonce of an address\r\n    /// @dev Nonces much\r\n    /// @param _0 Address to inspect\r\n    /// @return Current nonce of the address\r\n    function nonces(address _0) external view returns (uint256);\r\n}\r\n\r\n\r\ncontract Foo is IFoo {\r\n    /// @inheritdoc IFoo\r\n    mapping(address => uint256) public override nonces;\r\n}\r\n"
       },
       "contracts/IExampleContract.sol": {
         "content": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.8.6;\r\n\r\n/// @title Interface of our ExampleContract\r\n/// @author 0xAn0n\r\n/// @notice Put a simple description of the contract here.\r\n/// @dev And then a more complicated and tech oriented description of the contract there.\r\ninterface IExampleContract {\r\n  /// @notice Emitted when the function doSomething is called.\r\n  /// @dev More info about the event can be added here.\r\n  /// @param a Address of someone\r\n  /// @param b A random number\r\n  event DoSomething(\r\n    address indexed a,\r\n    uint256 b\r\n  );\r\n\r\n  /// @notice Thrown when an error happens.\r\n  /// @dev More info about the error.\r\n  /// @param expected Expected address\r\n  /// @param actual Actual address\r\n  error RandomError(address expected, address actual);\r\n\r\n  /// @notice Does something when this function is called.\r\n  /// @dev More info about the doSomething, and this even works\r\n  /// when the explanation is on two lines.\r\n  /// @param a Address to do something\r\n  /// @param b Number to do something\r\n  /// @return foo First return variable\r\n  /// @return bar Second return variable\r\n  function doSomething(address a, uint256 b) external returns (\r\n    uint256 foo,\r\n    uint256 bar\r\n  );\r\n\r\n  /// @notice A bad documented payable function.\r\n  function pay() external payable;\r\n\r\n  /// @notice Does another thing when the function is called.\r\n  /// @dev More info about doing another thing when the function is called.\r\n  /// @param num A random number\r\n  /// @return A random variable\r\n  function anotherThing(uint256 num) external pure returns (uint256);\r\n\r\n  /// @notice            Poorly documented function starting with weird spaces.\r\n  function boop() external view returns (address);\r\n}\r\n"
@@ -2586,9 +2586,9 @@
               "functionDebugData": {},
               "generatedSources": [],
               "linkReferences": {},
-              "object": "608060405234801561001057600080fd5b50610172806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c80637ecebe0014610030575b600080fd5b61004a600480360381019061004591906100db565b610060565b6040516100579190610121565b60405180910390f35b60006020528060005260406000206000915090505481565b600080fd5b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b60006100a88261007d565b9050919050565b6100b88161009d565b81146100c357600080fd5b50565b6000813590506100d5816100af565b92915050565b6000602082840312156100f1576100f0610078565b5b60006100ff848285016100c6565b91505092915050565b6000819050919050565b61011b81610108565b82525050565b60006020820190506101366000830184610112565b9291505056fea2646970667358221220ac17138f6fee24ce2c01741ff79287fde030b792b84ce332e5c46f78b09408d864736f6c634300080a0033",
-              "opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x172 DUP1 PUSH2 0x20 PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x2B JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x7ECEBE00 EQ PUSH2 0x30 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x4A PUSH1 0x4 DUP1 CALLDATASIZE SUB DUP2 ADD SWAP1 PUSH2 0x45 SWAP2 SWAP1 PUSH2 0xDB JUMP JUMPDEST PUSH2 0x60 JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH2 0x57 SWAP2 SWAP1 PUSH2 0x121 JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH1 0x0 PUSH1 0x20 MSTORE DUP1 PUSH1 0x0 MSTORE PUSH1 0x40 PUSH1 0x0 KECCAK256 PUSH1 0x0 SWAP2 POP SWAP1 POP SLOAD DUP2 JUMP JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x0 PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF DUP3 AND SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH1 0x0 PUSH2 0xA8 DUP3 PUSH2 0x7D JUMP JUMPDEST SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH2 0xB8 DUP2 PUSH2 0x9D JUMP JUMPDEST DUP2 EQ PUSH2 0xC3 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP JUMP JUMPDEST PUSH1 0x0 DUP2 CALLDATALOAD SWAP1 POP PUSH2 0xD5 DUP2 PUSH2 0xAF JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 DUP5 SUB SLT ISZERO PUSH2 0xF1 JUMPI PUSH2 0xF0 PUSH2 0x78 JUMP JUMPDEST JUMPDEST PUSH1 0x0 PUSH2 0xFF DUP5 DUP3 DUP6 ADD PUSH2 0xC6 JUMP JUMPDEST SWAP2 POP POP SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 DUP2 SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH2 0x11B DUP2 PUSH2 0x108 JUMP JUMPDEST DUP3 MSTORE POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 ADD SWAP1 POP PUSH2 0x136 PUSH1 0x0 DUP4 ADD DUP5 PUSH2 0x112 JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0xAC OR SGT DUP16 PUSH16 0xEE24CE2C01741FF79287FDE030B792B8 0x4C 0xE3 ORIGIN 0xE5 0xC4 PUSH16 0x78B09408D864736F6C634300080A0033 ",
-              "sourceMap": "365:108:1:-:0;;;;;;;;;;;;;;;;;;;"
+              "object": "608060405234801561001057600080fd5b50610172806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c80637ecebe0014610030575b600080fd5b61004a600480360381019061004591906100db565b610060565b6040516100579190610121565b60405180910390f35b60006020528060005260406000206000915090505481565b600080fd5b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b60006100a88261007d565b9050919050565b6100b88161009d565b81146100c357600080fd5b50565b6000813590506100d5816100af565b92915050565b6000602082840312156100f1576100f0610078565b5b60006100ff848285016100c6565b91505092915050565b6000819050919050565b61011b81610108565b82525050565b60006020820190506101366000830184610112565b9291505056fea264697066735822122037f0b3dee9df76734ed758118c2fe899a6610a57bc21402ca03534433efdbe7764736f6c634300080a0033",
+              "opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x172 DUP1 PUSH2 0x20 PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x2B JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x7ECEBE00 EQ PUSH2 0x30 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x4A PUSH1 0x4 DUP1 CALLDATASIZE SUB DUP2 ADD SWAP1 PUSH2 0x45 SWAP2 SWAP1 PUSH2 0xDB JUMP JUMPDEST PUSH2 0x60 JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH2 0x57 SWAP2 SWAP1 PUSH2 0x121 JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH1 0x0 PUSH1 0x20 MSTORE DUP1 PUSH1 0x0 MSTORE PUSH1 0x40 PUSH1 0x0 KECCAK256 PUSH1 0x0 SWAP2 POP SWAP1 POP SLOAD DUP2 JUMP JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x0 PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF DUP3 AND SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH1 0x0 PUSH2 0xA8 DUP3 PUSH2 0x7D JUMP JUMPDEST SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH2 0xB8 DUP2 PUSH2 0x9D JUMP JUMPDEST DUP2 EQ PUSH2 0xC3 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP JUMP JUMPDEST PUSH1 0x0 DUP2 CALLDATALOAD SWAP1 POP PUSH2 0xD5 DUP2 PUSH2 0xAF JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 DUP5 SUB SLT ISZERO PUSH2 0xF1 JUMPI PUSH2 0xF0 PUSH2 0x78 JUMP JUMPDEST JUMPDEST PUSH1 0x0 PUSH2 0xFF DUP5 DUP3 DUP6 ADD PUSH2 0xC6 JUMP JUMPDEST SWAP2 POP POP SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 DUP2 SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH2 0x11B DUP2 PUSH2 0x108 JUMP JUMPDEST DUP3 MSTORE POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 ADD SWAP1 POP PUSH2 0x136 PUSH1 0x0 DUP4 ADD DUP5 PUSH2 0x112 JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 CALLDATACOPY CREATE 0xB3 0xDE 0xE9 0xDF PUSH23 0x734ED758118C2FE899A6610A57BC21402CA03534433EFD 0xBE PUSH24 0x64736F6C634300080A003300000000000000000000000000 ",
+              "sourceMap": "367:108:1:-:0;;;;;;;;;;;;;;;;;;;"
             },
             "deployedBytecode": {
               "functionDebugData": {
@@ -3488,15 +3488,15 @@
               ],
               "immutableReferences": {},
               "linkReferences": {},
-              "object": "608060405234801561001057600080fd5b506004361061002b5760003560e01c80637ecebe0014610030575b600080fd5b61004a600480360381019061004591906100db565b610060565b6040516100579190610121565b60405180910390f35b60006020528060005260406000206000915090505481565b600080fd5b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b60006100a88261007d565b9050919050565b6100b88161009d565b81146100c357600080fd5b50565b6000813590506100d5816100af565b92915050565b6000602082840312156100f1576100f0610078565b5b60006100ff848285016100c6565b91505092915050565b6000819050919050565b61011b81610108565b82525050565b60006020820190506101366000830184610112565b9291505056fea2646970667358221220ac17138f6fee24ce2c01741ff79287fde030b792b84ce332e5c46f78b09408d864736f6c634300080a0033",
-              "opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x2B JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x7ECEBE00 EQ PUSH2 0x30 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x4A PUSH1 0x4 DUP1 CALLDATASIZE SUB DUP2 ADD SWAP1 PUSH2 0x45 SWAP2 SWAP1 PUSH2 0xDB JUMP JUMPDEST PUSH2 0x60 JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH2 0x57 SWAP2 SWAP1 PUSH2 0x121 JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH1 0x0 PUSH1 0x20 MSTORE DUP1 PUSH1 0x0 MSTORE PUSH1 0x40 PUSH1 0x0 KECCAK256 PUSH1 0x0 SWAP2 POP SWAP1 POP SLOAD DUP2 JUMP JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x0 PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF DUP3 AND SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH1 0x0 PUSH2 0xA8 DUP3 PUSH2 0x7D JUMP JUMPDEST SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH2 0xB8 DUP2 PUSH2 0x9D JUMP JUMPDEST DUP2 EQ PUSH2 0xC3 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP JUMP JUMPDEST PUSH1 0x0 DUP2 CALLDATALOAD SWAP1 POP PUSH2 0xD5 DUP2 PUSH2 0xAF JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 DUP5 SUB SLT ISZERO PUSH2 0xF1 JUMPI PUSH2 0xF0 PUSH2 0x78 JUMP JUMPDEST JUMPDEST PUSH1 0x0 PUSH2 0xFF DUP5 DUP3 DUP6 ADD PUSH2 0xC6 JUMP JUMPDEST SWAP2 POP POP SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 DUP2 SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH2 0x11B DUP2 PUSH2 0x108 JUMP JUMPDEST DUP3 MSTORE POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 ADD SWAP1 POP PUSH2 0x136 PUSH1 0x0 DUP4 ADD DUP5 PUSH2 0x112 JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0xAC OR SGT DUP16 PUSH16 0xEE24CE2C01741FF79287FDE030B792B8 0x4C 0xE3 ORIGIN 0xE5 0xC4 PUSH16 0x78B09408D864736F6C634300080A0033 ",
-              "sourceMap": "365:108:1:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;419:50;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;:::o;88:117:3:-;197:1;194;187:12;334:126;371:7;411:42;404:5;400:54;389:65;;334:126;;;:::o;466:96::-;503:7;532:24;550:5;532:24;:::i;:::-;521:35;;466:96;;;:::o;568:122::-;641:24;659:5;641:24;:::i;:::-;634:5;631:35;621:63;;680:1;677;670:12;621:63;568:122;:::o;696:139::-;742:5;780:6;767:20;758:29;;796:33;823:5;796:33;:::i;:::-;696:139;;;;:::o;841:329::-;900:6;949:2;937:9;928:7;924:23;920:32;917:119;;;955:79;;:::i;:::-;917:119;1075:1;1100:53;1145:7;1136:6;1125:9;1121:22;1100:53;:::i;:::-;1090:63;;1046:117;841:329;;;;:::o;1176:77::-;1213:7;1242:5;1231:16;;1176:77;;;:::o;1259:118::-;1346:24;1364:5;1346:24;:::i;:::-;1341:3;1334:37;1259:118;;:::o;1383:222::-;1476:4;1514:2;1503:9;1499:18;1491:26;;1527:71;1595:1;1584:9;1580:17;1571:6;1527:71;:::i;:::-;1383:222;;;;:::o"
+              "object": "608060405234801561001057600080fd5b506004361061002b5760003560e01c80637ecebe0014610030575b600080fd5b61004a600480360381019061004591906100db565b610060565b6040516100579190610121565b60405180910390f35b60006020528060005260406000206000915090505481565b600080fd5b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b60006100a88261007d565b9050919050565b6100b88161009d565b81146100c357600080fd5b50565b6000813590506100d5816100af565b92915050565b6000602082840312156100f1576100f0610078565b5b60006100ff848285016100c6565b91505092915050565b6000819050919050565b61011b81610108565b82525050565b60006020820190506101366000830184610112565b9291505056fea264697066735822122037f0b3dee9df76734ed758118c2fe899a6610a57bc21402ca03534433efdbe7764736f6c634300080a0033",
+              "opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x2B JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x7ECEBE00 EQ PUSH2 0x30 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x4A PUSH1 0x4 DUP1 CALLDATASIZE SUB DUP2 ADD SWAP1 PUSH2 0x45 SWAP2 SWAP1 PUSH2 0xDB JUMP JUMPDEST PUSH2 0x60 JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH2 0x57 SWAP2 SWAP1 PUSH2 0x121 JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH1 0x0 PUSH1 0x20 MSTORE DUP1 PUSH1 0x0 MSTORE PUSH1 0x40 PUSH1 0x0 KECCAK256 PUSH1 0x0 SWAP2 POP SWAP1 POP SLOAD DUP2 JUMP JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x0 PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF DUP3 AND SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH1 0x0 PUSH2 0xA8 DUP3 PUSH2 0x7D JUMP JUMPDEST SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH2 0xB8 DUP2 PUSH2 0x9D JUMP JUMPDEST DUP2 EQ PUSH2 0xC3 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP JUMP JUMPDEST PUSH1 0x0 DUP2 CALLDATALOAD SWAP1 POP PUSH2 0xD5 DUP2 PUSH2 0xAF JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 DUP5 SUB SLT ISZERO PUSH2 0xF1 JUMPI PUSH2 0xF0 PUSH2 0x78 JUMP JUMPDEST JUMPDEST PUSH1 0x0 PUSH2 0xFF DUP5 DUP3 DUP6 ADD PUSH2 0xC6 JUMP JUMPDEST SWAP2 POP POP SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 DUP2 SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH2 0x11B DUP2 PUSH2 0x108 JUMP JUMPDEST DUP3 MSTORE POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 ADD SWAP1 POP PUSH2 0x136 PUSH1 0x0 DUP4 ADD DUP5 PUSH2 0x112 JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 CALLDATACOPY CREATE 0xB3 0xDE 0xE9 0xDF PUSH23 0x734ED758118C2FE899A6610A57BC21402CA03534433EFD 0xBE PUSH24 0x64736F6C634300080A003300000000000000000000000000 ",
+              "sourceMap": "367:108:1:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;421:50;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;:::o;88:117:3:-;197:1;194;187:12;334:126;371:7;411:42;404:5;400:54;389:65;;334:126;;;:::o;466:96::-;503:7;532:24;550:5;532:24;:::i;:::-;521:35;;466:96;;;:::o;568:122::-;641:24;659:5;641:24;:::i;:::-;634:5;631:35;621:63;;680:1;677;670:12;621:63;568:122;:::o;696:139::-;742:5;780:6;767:20;758:29;;796:33;823:5;796:33;:::i;:::-;696:139;;;;:::o;841:329::-;900:6;949:2;937:9;928:7;924:23;920:32;917:119;;;955:79;;:::i;:::-;917:119;1075:1;1100:53;1145:7;1136:6;1125:9;1121:22;1100:53;:::i;:::-;1090:63;;1046:117;841:329;;;;:::o;1176:77::-;1213:7;1242:5;1231:16;;1176:77;;;:::o;1259:118::-;1346:24;1364:5;1346:24;:::i;:::-;1341:3;1334:37;1259:118;;:::o;1383:222::-;1476:4;1514:2;1503:9;1499:18;1491:26;;1527:71;1595:1;1584:9;1580:17;1571:6;1527:71;:::i;:::-;1383:222;;;;:::o"
             },
             "methodIdentifiers": {
               "nonces(address)": "7ecebe00"
             }
           },
-          "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"stateVariables\":{\"nonces\":{\"details\":\"Nonces much\",\"params\":{\"_0\":\"Address to inspect\"},\"return\":\"Current nonce of the address\",\"returns\":{\"_0\":\"Current nonce of the address\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"nonces(address)\":{\"notice\":\"Returns the nonce of an address\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Foo.sol\":\"Foo\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/Foo.sol\":{\"keccak256\":\"0x6f365cf913f14f6095ee9128d7c515219000d2cbb145efed037af5fb0d55f6d9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4f9572d07ee02a882e92e3d997e688614126ae8e209ec3e9c5dd24304432c8b2\",\"dweb:/ipfs/QmSGqrKD1ebiAESGwHv9rAax5XZ6ne4jUqjuHErUfMzhGC\"]}},\"version\":1}",
+          "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"stateVariables\":{\"nonces\":{\"details\":\"Nonces much\",\"params\":{\"_0\":\"Address to inspect\"},\"return\":\"Current nonce of the address\",\"returns\":{\"_0\":\"Current nonce of the address\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"nonces(address)\":{\"notice\":\"Returns the nonce of an address\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Foo.sol\":\"Foo\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/Foo.sol\":{\"keccak256\":\"0x4c8f5b31055f9a8f315113db41a5451dbcfaccb3e582e04e1b37a4513e4dc571\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://36c85f3d774182e498acd869f9b5b08a4180916a5a2baf9034ba9718f2539cee\",\"dweb:/ipfs/QmdnhUNV4r1Cj5bmCqcyXuuAMmNeyhcbiB7WABgoKdFRVe\"]}},\"version\":1}",
           "userdoc": {
             "kind": "user",
             "methods": {
@@ -3568,7 +3568,7 @@
               "nonces(address)": "7ecebe00"
             }
           },
-          "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_0\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Example Details Foo\",\"kind\":\"dev\",\"methods\":{\"nonces(address)\":{\"details\":\"Nonces much\",\"params\":{\"_0\":\"Address to inspect\"},\"returns\":{\"_0\":\"Current nonce of the address\"}}},\"title\":\"An Example Foo\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"nonces(address)\":{\"notice\":\"Returns the nonce of an address\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Foo.sol\":\"IFoo\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/Foo.sol\":{\"keccak256\":\"0x6f365cf913f14f6095ee9128d7c515219000d2cbb145efed037af5fb0d55f6d9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4f9572d07ee02a882e92e3d997e688614126ae8e209ec3e9c5dd24304432c8b2\",\"dweb:/ipfs/QmSGqrKD1ebiAESGwHv9rAax5XZ6ne4jUqjuHErUfMzhGC\"]}},\"version\":1}",
+          "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_0\",\"type\":\"address\"}],\"name\":\"nonces\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Example Details Foo\",\"kind\":\"dev\",\"methods\":{\"nonces(address)\":{\"details\":\"Nonces much\",\"params\":{\"_0\":\"Address to inspect\"},\"returns\":{\"_0\":\"Current nonce of the address\"}}},\"title\":\"An Example Foo\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"nonces(address)\":{\"notice\":\"Returns the nonce of an address\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Foo.sol\":\"IFoo\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/Foo.sol\":{\"keccak256\":\"0x4c8f5b31055f9a8f315113db41a5451dbcfaccb3e582e04e1b37a4513e4dc571\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://36c85f3d774182e498acd869f9b5b08a4180916a5a2baf9034ba9718f2539cee\",\"dweb:/ipfs/QmdnhUNV4r1Cj5bmCqcyXuuAMmNeyhcbiB7WABgoKdFRVe\"]}},\"version\":1}",
           "userdoc": {
             "kind": "user",
             "methods": {
@@ -4569,11 +4569,11 @@
                     "name": "IFoo",
                     "nodeType": "IdentifierPath",
                     "referencedDeclaration": 69,
-                    "src": "381:4:1"
+                    "src": "383:4:1"
                   },
                   "id": 71,
                   "nodeType": "InheritanceSpecifier",
-                  "src": "381:4:1"
+                  "src": "383:4:1"
                 }
               ],
               "canonicalName": "Foo",
@@ -4586,7 +4586,7 @@
                 69
               ],
               "name": "Foo",
-              "nameLocation": "374:3:1",
+              "nameLocation": "376:3:1",
               "nodeType": "ContractDefinition",
               "nodes": [
                 {
@@ -4597,23 +4597,23 @@
                   "documentation": {
                     "id": 72,
                     "nodeType": "StructuredDocumentation",
-                    "src": "393:20:1",
+                    "src": "395:20:1",
                     "text": "@inheritdoc IFoo"
                   },
                   "functionSelector": "7ecebe00",
                   "id": 77,
                   "mutability": "mutable",
                   "name": "nonces",
-                  "nameLocation": "463:6:1",
+                  "nameLocation": "465:6:1",
                   "nodeType": "VariableDeclaration",
                   "overrides": {
                     "id": 76,
                     "nodeType": "OverrideSpecifier",
                     "overrides": [],
-                    "src": "454:8:1"
+                    "src": "456:8:1"
                   },
                   "scope": 78,
-                  "src": "419:50:1",
+                  "src": "421:50:1",
                   "stateVariable": true,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4626,14 +4626,14 @@
                       "id": 73,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "427:7:1",
+                      "src": "429:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
                     "nodeType": "Mapping",
-                    "src": "419:27:1",
+                    "src": "421:27:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                       "typeString": "mapping(address => uint256)"
@@ -4642,7 +4642,7 @@
                       "id": 74,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "438:7:1",
+                      "src": "440:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -4653,11 +4653,11 @@
                 }
               ],
               "scope": 79,
-              "src": "365:108:1",
+              "src": "367:108:1",
               "usedErrors": []
             }
           ],
-          "src": "33:442:1"
+          "src": "33:444:1"
         },
         "id": 1
       },

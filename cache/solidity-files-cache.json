@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Projects\\Crypto\\Projects\\hardhat-output-checker\\contracts\\Bar.sol": {
+    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\Bar.sol": {
       "lastModificationDate": 1639813457145,
       "contentHash": "50211cd03583159c9ccabee290b89640",
       "sourceName": "contracts/Bar.sol",
@@ -39,9 +39,9 @@
         "IBar"
       ]
     },
-    "C:\\Projects\\Crypto\\Projects\\hardhat-output-checker\\contracts\\Foo.sol": {
-      "lastModificationDate": 1639813460172,
-      "contentHash": "ef9e3ed42b0f525eea3ca758c316a72c",
+    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\Foo.sol": {
+      "lastModificationDate": 1639813500271,
+      "contentHash": "3367d1ed38146e567c72a1c030786d53",
       "sourceName": "contracts/Foo.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -77,7 +77,7 @@
         "IFoo"
       ]
     },
-    "C:\\Projects\\Crypto\\Projects\\hardhat-output-checker\\contracts\\IExampleContract.sol": {
+    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\IExampleContract.sol": {
       "lastModificationDate": 1639813453764,
       "contentHash": "3a7f2693e4b0385b5e195e181654a7f7",
       "sourceName": "contracts/IExampleContract.sol",
