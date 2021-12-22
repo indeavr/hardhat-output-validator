@@ -92,7 +92,8 @@ Here are all the configuration parameters that are currently available, but as s
 | `runOnCompile`     | True if the plugin should make the checks on every compilation | `true`     |
 | `include` | List of all the contract / interface / library names to include. An empty array will check for everything | `[]` |
 | `exclude` | List of all the contract / interface / library names to exclude. | `[]` |
-| `checks` | Enable/Disable certain checks | `{ title: true, details: true, compilationWarnings: true, missingUserDoc: true, missingDevDoc: true }` |
+| `checks` | Enable/Disable certain checks | `{ title: true, details: true, compilationWarnings: true, missingUserDoc: true, missingDevDoc: true, devDoc:  }` |
+| `checks.devDoc` | Enable/Disable certain checks for the dev docs | `{ events: true, variables: true, functions: true, constructor: true }` |
 
 ## ⛑ Contribute 
 

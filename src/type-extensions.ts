@@ -8,6 +8,7 @@ declare module 'hardhat/types/config' {
       exclude?: string[]
       runOnCompile?: boolean
       errorMode?: boolean
+      strict?: boolean
       checks?: Checks
     }
   }
@@ -18,6 +19,7 @@ declare module 'hardhat/types/config' {
       exclude: string[]
       runOnCompile: boolean
       errorMode: boolean
+      strict: boolean
       checks: Checks
     }
   }

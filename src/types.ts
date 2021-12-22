@@ -1,16 +1,30 @@
-import { CompilerOutputContract } from "hardhat/types";
+import { CompilerOutputContract } from 'hardhat/types'
 
 export interface Checks {
-  title?: boolean // default: true,
-  details?: boolean // default: true,
-  compilationWarnings?: boolean // default: true,
-  missingUserDoc?: boolean // default: true,
-  missingDevDoc?: boolean // default: true,
+  title?: Severity // default: errorMode value - true,
+  details?: Severity // default: errorMode value - true,
+  compilationWarnings?: Severity // default: errorMode value - true,
+  missingUserDoc?: Severity // default: errorMode value - true,
+  missingDevDoc?: Severity // default: errorMode value - true,
+  devDoc?: DocChecks
+  userDoc?: UserDocChecks
 }
 
+export interface DocChecks {
+  events?: Severity
+  functions?: Severity
+  ctor?: Severity
+}
+
+export interface UserDocChecks extends DocChecks {
+}
+
+export type SeverityLevel = "error" | "warning";
+export type Severity = SeverityLevel | false
 
 export interface ErrorInfo {
   type: ErrorType
+  severityLevel: SeverityLevel
   text: string
   at: string
   filePath: string
@@ -25,6 +39,8 @@ export enum ErrorType {
   MissingUserDoc,
   // Dev Docs
   MissingDevDoc,
+  // non-strict
+  MissingUserOrDevDoc,
 }
 
 declare interface ErrorUserdocArrayItem {
@@ -109,3 +125,4 @@ export interface CompilerOutputWithDocsAndPath
   filePath: string
   fileName: string
 }
+

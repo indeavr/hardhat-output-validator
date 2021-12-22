@@ -31,6 +31,9 @@ interface IBar {
 /// @notice  Manages the bar
 /// @dev     Blablou
 contract Bar is IBar {
+
+    uint40 public avar;
+
     /// @inheritdoc IBar
     function set(T memory t) external { }
 
