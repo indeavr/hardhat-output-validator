@@ -6,6 +6,10 @@ export interface Checks {
   compilationWarnings?: Severity // default: errorMode value - true,
   missingUserDoc?: Severity // default: errorMode value - true,
   missingDevDoc?: Severity // default: errorMode value - true,
+  events?: Severity
+  functions?: Severity
+  variables?: Severity
+  ctor?: Severity
   devDoc?: DocChecks
   userDoc?: UserDocChecks
 }
@@ -13,13 +17,13 @@ export interface Checks {
 export interface DocChecks {
   events?: Severity
   functions?: Severity
+  variables?: Severity
   ctor?: Severity
 }
 
-export interface UserDocChecks extends DocChecks {
-}
+export interface UserDocChecks extends DocChecks {}
 
-export type SeverityLevel = "error" | "warning";
+export type SeverityLevel = 'error' | 'warning'
 export type Severity = SeverityLevel | false
 
 export interface ErrorInfo {
@@ -55,7 +59,7 @@ export interface ErrorDevdocArrayItem {
 }
 
 export interface CompilerOutputContractWithDocumentation
-    extends CompilerOutputContract {
+  extends CompilerOutputContract {
   devdoc?: {
     author?: string
     details?: string
@@ -121,8 +125,7 @@ export interface CompilerOutputContractWithDocumentation
 }
 
 export interface CompilerOutputWithDocsAndPath
-    extends CompilerOutputContractWithDocumentation {
+  extends CompilerOutputContractWithDocumentation {
   filePath: string
   fileName: string
 }
-

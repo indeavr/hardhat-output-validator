@@ -26,17 +26,27 @@ extendConfig(
         compilationWarnings: defaultValue,
         missingUserDoc: defaultValue,
         missingDevDoc: defaultValue,
+        events: defaultValue,
+        functions: defaultValue,
+        variables: defaultValue,
+        ctor: defaultValue,
         ...(userConfig.outputValidator?.checks || {}),
         userDoc: {
-          events: defaultValue,
-          functions: defaultValue,
-          ctor: defaultValue,
+          events: userConfig.outputValidator?.checks?.events || defaultValue,
+          functions:
+              userConfig.outputValidator?.checks?.functions || defaultValue,
+          variables:
+              userConfig.outputValidator?.checks?.variables || defaultValue,
+          ctor: userConfig.outputValidator?.checks?.ctor || defaultValue,
           ...(userConfig.outputValidator?.checks?.userDoc || {}),
         },
         devDoc: {
-          events: defaultValue,
-          functions: defaultValue,
-          ctor: defaultValue,
+          events: userConfig.outputValidator?.checks?.events || defaultValue,
+          functions:
+              userConfig.outputValidator?.checks?.functions || defaultValue,
+          variables:
+              userConfig.outputValidator?.checks?.variables || defaultValue,
+          ctor: userConfig.outputValidator?.checks?.ctor || defaultValue,
           ...(userConfig.outputValidator?.checks?.devDoc || {}),
         },
       },
@@ -109,8 +119,8 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
 
     const build = await getBuildInfo(qualifiedName)
     const info = build?.output.contracts[source][
-      name
-    ] as CompilerOutputContractWithDocumentation
+        name
+        ] as CompilerOutputContractWithDocumentation
 
     return {
       ...info,
@@ -119,14 +129,39 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
     } as CompilerOutputWithDocsAndPath
   }
 
+  // ====== Start ======
+  console.log('<<< Starting Output Checks >>> ')
+
+  const allContracts = await hre.artifacts.getAllFullyQualifiedNames()
+  const qualifiedNames = allContracts
+      .filter((str) => str.startsWith('contracts'))
+      .filter((path) => {
+        // Checks if this contact is included
+        const includesPath = config.include.some((str) => path.includes(str))
+        const excludesPath = config.exclude.some((str) => path.includes(str))
+
+        return (config.include.length === 0 || includesPath) && !excludesPath
+      })
+  console.log('qualifiedNames', qualifiedNames)
+
+  // 1. Setup
+  const buildInfo = (
+      await Promise.all(qualifiedNames.map(getBuildInfo))
+  ).filter((inf) => inf !== undefined) as BuildInfo[]
+
+  const contractBuildInfo: CompilerOutputWithDocsAndPath[] = (
+      await Promise.all(qualifiedNames.map(getContractBuildInfo))
+  ).filter((inf) => inf !== undefined)
+
+  // 2. Check
   const checkForErrors = (info: CompilerOutputWithDocsAndPath): ErrorInfo[] => {
     const foundErrors: ErrorInfo[] = []
     const getErrorText = setupErrors(info.filePath, info.fileName)
 
     const addError = (
-      errorType: ErrorType,
-      severityLevel: SeverityLevel,
-      extraData?: any
+        errorType: ErrorType,
+        severityLevel: SeverityLevel,
+        extraData?: any
     ) => {
       const text = getErrorText(errorType, extraData)
       foundErrors.push({
@@ -161,12 +196,16 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
     }
 
     const checkEvent = (entity: any) => {
+      if (!config.checks.events) {
+        return
+      }
+
       let hasUserDoc = true
       let hasDevDoc = true
       if (
-        config.checks.missingUserDoc &&
-        config.checks.userDoc?.events &&
-        info.userdoc
+          config.checks.missingUserDoc &&
+          config.checks.userDoc?.events &&
+          info.userdoc
       ) {
         const userDocEntry = findByName(info.userdoc.events, entity.name)
 
@@ -175,9 +214,9 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
         }
       }
       if (
-        config.checks.missingDevDoc &&
-        config.checks.devDoc?.events &&
-        info.devdoc
+          config.checks.missingDevDoc &&
+          config.checks.devDoc?.events &&
+          info.devdoc
       ) {
         const devDocEntry = findByName(info.devdoc.events, entity.name)
 
@@ -216,12 +255,56 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
     }
 
     const checkFunction = (entity: any) => {
+      if (!config.checks.functions && !config.checks.variables) {
+        return
+      }
+
       let hasUserDoc = true
       let hasDevDoc = true
+
+      if (!config.checks.variables) {
+        const checkIfStateVar = (
+            filePath: string,
+            contractName: string,
+            funcName: string
+        ): boolean | undefined => {
+          // sources[contractPath].ast.nodes[]
+          // .find(n => n.nodeType === "ContractDefinition")
+          // ?.nodes[].find(nn => nn.name === "varName")?.stateVariable
+          let ast: any
+          buildInfo.forEach((bi) => {
+            const key = Object.keys(bi.output.sources).find(
+                (k) => k === filePath
+            )
+            if (key) {
+              ast = bi.output.sources[key].ast
+            }
+          })
+
+          if (ast) {
+            const contractDef = ast.nodes?.find(
+                (n: any) =>
+                    n.nodeType === 'ContractDefinition' &&
+                    n.canonicalName === contractName
+            )
+
+            const ref = contractDef?.nodes.find(
+                (nn: any) => nn.name === funcName
+            )
+
+            return ref?.stateVariable
+          }
+        }
+
+        if (checkIfStateVar(info.filePath, info.fileName, entity.name)) {
+          return
+        }
+      }
+
       if (
-        config.checks.missingUserDoc &&
-        config.checks.userDoc?.functions &&
-        info.userdoc
+          config.checks.missingUserDoc &&
+          config.checks.userDoc?.functions &&
+          info.userdoc
       ) {
         const userDocEntry = findByName(info.userdoc.methods, entity.name)
         if (!userDocEntry || !userDocEntry.notice) {
@@ -229,14 +312,14 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
         }
       }
       if (
-        config.checks.missingDevDoc &&
-        config.checks.devDoc?.functions &&
-        info.devdoc
+          config.checks.missingDevDoc &&
+          config.checks.devDoc?.functions &&
+          info.devdoc
       ) {
         const devDocEntryFunc = findByName(info.devdoc.methods, entity.name)
         const devDocEntryVar = findByName(
-          info.devdoc.stateVariables,
-          entity.name
+            info.devdoc.stateVariables,
+            entity.name
         )
 
         // TODO: Extend with checks for params, returns
@@ -248,9 +331,9 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
       if (!config.strict) {
         if (!hasDevDoc && !hasUserDoc) {
           addError(
-            ErrorType.MissingUserOrDevDoc,
-            defaultSeverity,
-            `Function: (${entity.name})`
+              ErrorType.MissingUserOrDevDoc,
+              defaultSeverity,
+              `Function: (${entity.name})`
           )
         }
       } else {
@@ -298,36 +381,12 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
     return foundErrors
   }
 
-  console.log('<<< Starting Output Checks >>> ')
-
-  const allContracts = await hre.artifacts.getAllFullyQualifiedNames()
-  // console.log("allContracts", allContracts);
-  const qualifiedNames = allContracts
-    .filter((str) => str.startsWith('contracts'))
-    .filter((path) => {
-      // Checks if this contact is included
-      const includesPath = config.include.some((str) => path.includes(str))
-      const excludesPath = config.exclude.some((str) => path.includes(str))
-
-      return (config.include.length === 0 || includesPath) && !excludesPath
-    })
-  console.log('qualifiedNames', qualifiedNames)
-
-  // 1. Setup
-  const buildInfo = (
-    await Promise.all(qualifiedNames.map(getBuildInfo))
-  ).filter((inf) => inf !== undefined) as BuildInfo[]
-
-  const contractBuildInfo: CompilerOutputWithDocsAndPath[] = (
-    await Promise.all(qualifiedNames.map(getContractBuildInfo))
-  ).filter((inf) => inf !== undefined)
-
-  // 2. Check
   const errors = contractBuildInfo.reduce((foundErrors, info) => {
     const docErrors = checkForErrors(info)
 
     if (docErrors && docErrors.length > 0) {
-      foundErrors[info.filePath] = docErrors
+      const key = info.filePath + ":" + info.fileName;
+      foundErrors[key] = docErrors
     }
 
     return foundErrors
@@ -394,4 +453,5 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
   }
 
   console.log('✅ All Contracts have been checked for missing Natspec comments')
+  // ====== END ======
 })

@@ -11,9 +11,8 @@ const config: HardhatUserConfig = {
     // strict: true,
     checks: {
       compilationWarnings: false,
-      devDoc: {
-        events: false,
-      },
+      variables: false,
+      events: false,
     },
   },
 }
