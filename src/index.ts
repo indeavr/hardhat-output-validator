@@ -1,12 +1,7 @@
 /* eslint-disable guard-for-in, max-len, no-await-in-loop, no-restricted-syntax */
 import { extendConfig, task } from 'hardhat/config'
 import { TASK_COMPILE } from 'hardhat/builtin-tasks/task-names'
-import {
-  HardhatConfig,
-  HardhatUserConfig,
-  BuildInfo,
-  HardhatRuntimeEnvironment,
-} from 'hardhat/types'
+import { HardhatConfig, HardhatUserConfig, BuildInfo, HardhatRuntimeEnvironment, } from 'hardhat/types'
 import chalk from 'chalk'
 import {
   CompilerOutputContractWithDocumentation,
@@ -208,10 +203,9 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
         return
       }
 
-      const key = Object.keys(searchInObj).find((methodSigniture) => {
-        const name = methodSigniture.split('(')[0]
-        return name === entityName
-      })
+      const key = Object.keys(searchInObj).find(
+          (methodSigniture) => methodSigniture === entityName
+      )
 
       if (!key) {
         return
@@ -350,7 +344,13 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
           }
         }
 
-        if (checkIfStateVar(info.filePath, info.fileName, abiEntity.name)) {
+        if (
+            checkIfStateVar(
+                info.filePath,
+                info.fileName,
+                abiEntity.name.split('(')[0]
+            )
+        ) {
           return
         }
       }
@@ -374,58 +374,38 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
         // if checks.missingParams ->
         // if func exists in devdoc/userdoc & has params in abi
         // but not in devdoc
+        if (abiEntity.name.includes("set")) {
+          console.log("INCLUDES", devDocEntryFunc);
+        }
         if (!devDocEntryFunc) {
           hasDevDoc = false
         } else {
           if (config.checks.params && abiEntity.inputs.length > 0) {
-            // Checks for params
-            if (abiEntity.inputs.length === 1) {
-              if (
-                !devDocEntryFunc?.params?.[abiEntity.inputs[0].name] &&
-                !devDocEntryFunc?.params?.['_0']
-              ) {
+            abiEntity.inputs.forEach((param: any, i: number) => {
+              const paramName = param.name || `_${i}`
+              if (!devDocEntryFunc?.params?.[paramName]) {
                 addError(
-                  ErrorType.MissingParams,
-                  defaultSeverity,
-                  `Function: (${abiEntity.name})`
-                )
-              }
-            } else {
-              abiEntity.inputs.forEach((param: any) => {
-                if (!devDocEntryFunc?.params?.[param.name]) {
-                  addError(
                     ErrorType.MissingParams,
                     defaultSeverity,
-                    `Function: (${abiEntity.name}), param: (${param.name})`
-                  )
-                }
-              })
-            }
+                    `Function: (${abiEntity.name}), param: (${paramName || ''})`
+                )
+              }
+            })
           }
           if (config.checks.returns && abiEntity.outputs.length > 0) {
             // Check for returns
-            if (abiEntity.outputs.length === 1) {
-              if (
-                !devDocEntryFunc?.returns?.[abiEntity.outputs[0].name] &&
-                !devDocEntryFunc?.returns?.['_0']
-              ) {
+            abiEntity.outputs.forEach((param: any, i: number) => {
+              const paramName = param.name || `_${i}`
+              if (!devDocEntryFunc?.returns?.[paramName]) {
                 addError(
-                  ErrorType.MissingReturnParams,
-                  defaultSeverity,
-                  `Function: (${abiEntity.name})`
-                )
-              }
-            } else {
-              abiEntity.outputs.forEach((param: any) => {
-                if (!devDocEntryFunc?.returns?.[param.name]) {
-                  addError(
                     ErrorType.MissingReturnParams,
                     defaultSeverity,
-                    `Function: (${abiEntity.name}), returnParam: (${param.name})`
-                  )
-                }
-              })
-            }
+                    `Function: (${abiEntity.name}), returnParam: (${
+                        paramName || ''
+                    })`
+                )
+              }
+            })
           }
         }
       }
@@ -439,7 +419,7 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
           )
         }
 
-        if (!hasDevDoc) {
+        if (!hasDevDoc && hasUserDoc) {
           if (abiEntity.inputs.length > 0) {
             addError(
               ErrorType.MissingAllParams,
@@ -502,16 +482,16 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
                 !n.absolutePath.startsWith('contracts')
               ) {
                 const refId = n.sourceUnit
-                const canonicalName = n.symbolAliases?.foreign?.name
+
                 let contractDef
                 for (const k in bi.output.sources) {
                   if (bi.output.sources[k].ast?.id === refId) {
                     const defs = bi.output.sources[k].ast.nodes?.filter(
                       (nn: any) => nn.nodeType === 'ContractDefinition'
                     )
-                    if (defs.length > 1 && canonicalName) {
+                    if (defs.length > 1) {
                       contractDef = defs.find(
-                        (d: any) => d.canonicalName === canonicalName
+                          (d: any) => d.canonicalName === contractName
                       )
                     } else {
                       contractDef = defs[0]
@@ -525,7 +505,7 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
 
                 if (contractDef) {
                   const func = contractDef.nodes?.find(
-                    (n: any) => n.name === entity.name
+                      (nn: any) => nn.name === entity.name.split('(')[0]
                   )
 
                   if (func) {
@@ -545,11 +525,16 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
     if (Array.isArray(info.abi)) {
       // Loops through the abi and for each function/event/var check in the user/dev doc.
       info.abi.forEach((entity) => {
+        entity.name = `${entity.name}(${
+            entity.inputs ? entity.inputs.map((i: any) => i.type).join(',') : ''
+        })`
+
         const isExternal = checkIsExternalDependency(
-          info.filePath,
-          info.fileName,
-          entity
+            info.filePath,
+            info.fileName,
+            entity
         )
+
         if (isExternal) {
           return
         }

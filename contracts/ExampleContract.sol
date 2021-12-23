@@ -33,7 +33,7 @@ contract ExampleContract is IExampleContract, BaseContract {
     /// Documented with no params
     /// @param first The first arg
     /// @return a The first returns arg
-    /// @return The second returns arg
+    /// @return {uint} The second returns arg
     function extraFuncSecond(address first, uint second) external payable returns (uint a, uint){
         return (42, 42);
     }

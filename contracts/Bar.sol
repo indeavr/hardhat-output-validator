@@ -41,8 +41,14 @@ contract Bar is IBar, Ownable{
     /// @notice Cool function bro
     function boop(uint256 bar) external { }
 
+    /// @notice Baaps the yaps1
+    /// @param bar1 Number of bar
+    function baap(uint256 bar1) external { }
+
     /// @notice Baaps the yaps
     /// @param bar Number of bar
     /// @param aar Address of aar
     function baap(uint256 bar, address aar) external { }
+
+
 }

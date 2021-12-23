@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\Bar.sol": {
-      "lastModificationDate": 1640262999937,
-      "contentHash": "eaccf1e7c776c0340e3fa689d96386c2",
+      "lastModificationDate": 1640269486002,
+      "contentHash": "70f9ed7f98ad8f4b9b9a981ddc374915",
       "sourceName": "contracts/Bar.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -155,8 +155,8 @@
       ]
     },
     "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\ExampleContract.sol": {
-      "lastModificationDate": 1640262999939,
-      "contentHash": "75be5c63b5af3dbf9411e7fabcb6aeeb",
+      "lastModificationDate": 1640270815417,
+      "contentHash": "a976c9a2db66701c610683b0b045e8ac",
       "sourceName": "contracts/ExampleContract.sol",
       "solcConfig": {
         "version": "0.8.10",
