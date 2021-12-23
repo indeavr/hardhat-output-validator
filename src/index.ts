@@ -1,7 +1,7 @@
 /* eslint-disable guard-for-in, max-len, no-await-in-loop, no-restricted-syntax */
 import { extendConfig, task } from 'hardhat/config'
 import { TASK_COMPILE } from 'hardhat/builtin-tasks/task-names'
-import { HardhatConfig, HardhatUserConfig, BuildInfo } from 'hardhat/types'
+import { HardhatConfig, HardhatUserConfig, BuildInfo, HardhatRuntimeEnvironment } from 'hardhat/types'
 import chalk from 'chalk'
 import {
   CompilerOutputContractWithDocumentation,
@@ -92,7 +92,6 @@ const setupErrors =
 
 task(TASK_COMPILE, async (args, hre, runSuper) => {
   const config = hre.config.outputValidator
-  const defaultSeverity = config.errorMode ? 'error' : 'warning'
 
   // Updates the compiler settings
   for (const compiler of hre.config.solidity.compilers) {
@@ -107,20 +106,35 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
     return
   }
 
+  await run(hre);
+})
+
+
+task("validateOutput", async (args, hre) => {
+  console.log("<<< Validating Output for Natspec >>>");
+
+  await run(hre);
+})
+
+const run = async (hre: HardhatRuntimeEnvironment) => {
+  const config = hre.config.outputValidator
+
+  const defaultSeverity = config.errorMode ? 'error' : 'warning'
+
   const getBuildInfo = async (
-    qualifiedName: string
+      qualifiedName: string
   ): Promise<BuildInfo | undefined> => hre.artifacts.getBuildInfo(qualifiedName)
 
   // Loops through all the qualified names to get all the compiled contracts
   const getContractBuildInfo = async (
-    qualifiedName: string
+      qualifiedName: string
   ): Promise<CompilerOutputWithDocsAndPath> => {
     const [source, name] = qualifiedName.split(':')
 
     const build = await getBuildInfo(qualifiedName)
     const info = build?.output.contracts[source][
-      name
-    ] as CompilerOutputContractWithDocumentation
+        name
+        ] as CompilerOutputContractWithDocumentation
 
     return {
       ...info,
@@ -134,23 +148,23 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
 
   const allContracts = await hre.artifacts.getAllFullyQualifiedNames()
   const qualifiedNames = allContracts
-    .filter((str) => str.startsWith('contracts'))
-    .filter((path) => {
-      // Checks if this contact is included
-      const includesPath = config.include.some((str) => path.includes(str))
-      const excludesPath = config.exclude.some((str) => path.includes(str))
+      .filter((str) => str.startsWith('contracts'))
+      .filter((path) => {
+        // Checks if this contact is included
+        const includesPath = config.include.some((str) => path.includes(str))
+        const excludesPath = config.exclude.some((str) => path.includes(str))
 
-      return (config.include.length === 0 || includesPath) && !excludesPath
-    })
+        return (config.include.length === 0 || includesPath) && !excludesPath
+      })
   console.log('qualifiedNames', qualifiedNames)
 
   // 1. Setup
   const buildInfo = (
-    await Promise.all(qualifiedNames.map(getBuildInfo))
+      await Promise.all(qualifiedNames.map(getBuildInfo))
   ).filter((inf) => inf !== undefined) as BuildInfo[]
 
   const contractBuildInfo: CompilerOutputWithDocsAndPath[] = (
-    await Promise.all(qualifiedNames.map(getContractBuildInfo))
+      await Promise.all(qualifiedNames.map(getContractBuildInfo))
   ).filter((inf) => inf !== undefined)
 
   // 2. Check
@@ -159,9 +173,9 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
     const getErrorText = setupErrors(info.filePath, info.fileName)
 
     const addError = (
-      errorType: ErrorType,
-      severityLevel: SeverityLevel,
-      extraData?: any
+        errorType: ErrorType,
+        severityLevel: SeverityLevel,
+        extraData?: any
     ) => {
       const text = getErrorText(errorType, extraData)
       foundErrors.push({
@@ -203,9 +217,9 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
       let hasUserDoc = true
       let hasDevDoc = true
       if (
-        config.checks.missingUserDoc &&
-        config.checks.userDoc?.events &&
-        info.userdoc
+          config.checks.missingUserDoc &&
+          config.checks.userDoc?.events &&
+          info.userdoc
       ) {
         const userDocEntry = findByName(info.userdoc.events, entity.name)
 
@@ -214,9 +228,9 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
         }
       }
       if (
-        config.checks.missingDevDoc &&
-        config.checks.devDoc?.events &&
-        info.devdoc
+          config.checks.missingDevDoc &&
+          config.checks.devDoc?.events &&
+          info.devdoc
       ) {
         const devDocEntry = findByName(info.devdoc.events, entity.name)
 
@@ -229,27 +243,27 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
       if (!config.strict) {
         if (!hasDevDoc && !hasUserDoc) {
           addError(
-            ErrorType.MissingUserOrDevDoc,
-            defaultSeverity,
-            `Event: (${entity.name})`
+              ErrorType.MissingUserOrDevDoc,
+              defaultSeverity,
+              `Event: (${entity.name})`
           )
         }
       } else {
         // STRICT
         const userSev =
-          config.checks.userDoc?.events || config.checks.missingUserDoc
+            config.checks.userDoc?.events || config.checks.missingUserDoc
         addError(
-          ErrorType.MissingUserDoc,
-          userSev as SeverityLevel,
-          `Event: (${entity.name})`
+            ErrorType.MissingUserDoc,
+            userSev as SeverityLevel,
+            `Event: (${entity.name})`
         )
 
         const severity =
-          config.checks.devDoc?.events || config.checks.missingDevDoc
+            config.checks.devDoc?.events || config.checks.missingDevDoc
         addError(
-          ErrorType.MissingUserDoc,
-          severity as SeverityLevel,
-          `Event: (${entity.name})`
+            ErrorType.MissingUserDoc,
+            severity as SeverityLevel,
+            `Event: (${entity.name})`
         )
       }
     }
@@ -264,9 +278,9 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
 
       if (!config.checks.variables) {
         const checkIfStateVar = (
-          filePath: string,
-          contractName: string,
-          funcName: string
+            filePath: string,
+            contractName: string,
+            funcName: string
         ): boolean | undefined => {
           const tryFindFunc = (nodes: any[]) => {
             const funInfo = nodes.find(
@@ -330,9 +344,9 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
       }
 
       if (
-        config.checks.missingUserDoc &&
-        config.checks.userDoc?.functions &&
-        info.userdoc
+          config.checks.missingUserDoc &&
+          config.checks.userDoc?.functions &&
+          info.userdoc
       ) {
         const userDocEntry = findByName(info.userdoc.methods, entity.name)
         if (!userDocEntry || !userDocEntry.notice) {
@@ -340,14 +354,14 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
         }
       }
       if (
-        config.checks.missingDevDoc &&
-        config.checks.devDoc?.functions &&
-        info.devdoc
+          config.checks.missingDevDoc &&
+          config.checks.devDoc?.functions &&
+          info.devdoc
       ) {
         const devDocEntryFunc = findByName(info.devdoc.methods, entity.name)
         const devDocEntryVar = findByName(
-          info.devdoc.stateVariables,
-          entity.name
+            info.devdoc.stateVariables,
+            entity.name
         )
 
         // TODO: Extend with checks for params, returns
@@ -359,27 +373,27 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
       if (!config.strict) {
         if (!hasDevDoc && !hasUserDoc) {
           addError(
-            ErrorType.MissingUserOrDevDoc,
-            defaultSeverity,
-            `Function: (${entity.name})`
+              ErrorType.MissingUserOrDevDoc,
+              defaultSeverity,
+              `Function: (${entity.name})`
           )
         }
       } else {
         // STRICT
         const userSev =
-          config.checks.userDoc?.functions || config.checks.missingUserDoc
+            config.checks.userDoc?.functions || config.checks.missingUserDoc
         addError(
-          ErrorType.MissingUserDoc,
-          userSev as SeverityLevel,
-          `Function: (${entity.name})`
+            ErrorType.MissingUserDoc,
+            userSev as SeverityLevel,
+            `Function: (${entity.name})`
         )
 
         const severity =
-          config.checks.devDoc?.functions || config.checks.missingUserDoc
+            config.checks.devDoc?.functions || config.checks.missingUserDoc
         addError(
-          ErrorType.MissingDevDoc,
-          severity as SeverityLevel,
-          `Function: (${entity.name})`
+            ErrorType.MissingDevDoc,
+            severity as SeverityLevel,
+            `Function: (${entity.name})`
         )
       }
     }
@@ -435,8 +449,8 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
 
           errors[err.sourceLocation.file].push({
             text: setupErrors(filePath, fileName)(
-              ErrorType.CompilationWarning,
-              err.formattedMessage
+                ErrorType.CompilationWarning,
+                err.formattedMessage
             ),
             severityLevel: config.checks.compilationWarnings as SeverityLevel,
             type: ErrorType.CompilationWarning,
@@ -482,4 +496,4 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
 
   console.log('✅ All Contracts have been checked for missing Natspec comments')
   // ====== END ======
-})
+}

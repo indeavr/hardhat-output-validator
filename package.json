@@ -1,6 +1,6 @@
 {
   "name": "hardhat-output-validator",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "Zero-config Hardhat plugin to check the build output of Solidity contracts",
   "repository": "github:indeavr/hardhat-output-validator",
   "author": "Indeavr",
@@ -16,6 +16,7 @@
   ],
   "scripts": {
     "compile": "hardhat compile",
+    "validateOutput": "hardhat validateOutput",
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },
