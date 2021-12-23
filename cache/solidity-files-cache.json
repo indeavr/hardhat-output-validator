@@ -2,9 +2,88 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\Bar.sol": {
-      "lastModificationDate": 1640175244952,
-      "contentHash": "9a4da750270e69d02c8c7368c50c2595",
+      "lastModificationDate": 1640262999937,
+      "contentHash": "eaccf1e7c776c0340e3fa689d96386c2",
       "sourceName": "contracts/Bar.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "Bar",
+        "IBar"
+      ]
+    },
+    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\node_modules\\@openzeppelin\\contracts\\access\\Ownable.sol": {
+      "lastModificationDate": 1640263268340,
+      "contentHash": "8398972af73b4e9e5ff3b31cad86234f",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
+      "lastModificationDate": 1640263268132,
+      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
         "version": "0.8.10",
         "settings": {
@@ -32,11 +111,10 @@
       },
       "imports": [],
       "versionPragmas": [
-        "0.8.10"
+        "^0.8.0"
       ],
       "artifacts": [
-        "Bar",
-        "IBar"
+        "Context"
       ]
     },
     "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\BaseContract.sol": {
@@ -77,8 +155,8 @@
       ]
     },
     "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\ExampleContract.sol": {
-      "lastModificationDate": 1640248240630,
-      "contentHash": "7690ae19d51b379b49d6389065b92b2f",
+      "lastModificationDate": 1640262999939,
+      "contentHash": "75be5c63b5af3dbf9411e7fabcb6aeeb",
       "sourceName": "contracts/ExampleContract.sol",
       "solcConfig": {
         "version": "0.8.10",

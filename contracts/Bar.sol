@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.10;
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 /// @title An Example Bar
 /// @dev Example Details Bar
@@ -30,7 +31,7 @@ interface IBar {
 /// @author  Primitive
 /// @notice  Manages the bar
 /// @dev     Blablou
-contract Bar is IBar {
+contract Bar is IBar, Ownable{
 
     uint40 public avar;
 

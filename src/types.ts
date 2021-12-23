@@ -9,6 +9,8 @@ export interface Checks {
   events?: Severity
   functions?: Severity
   variables?: Severity
+  params?: Severity
+  returns?: Severity
   ctor?: Severity
   devDoc?: DocChecks
   userDoc?: UserDocChecks
@@ -43,6 +45,10 @@ export enum ErrorType {
   MissingUserDoc,
   // Dev Docs
   MissingDevDoc,
+  MissingParams,
+  MissingReturnParams,
+  MissingAllParams,
+  MissingAllReturnParams,
   // non-strict
   MissingUserOrDevDoc,
 }
