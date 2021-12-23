@@ -70,14 +70,16 @@ const config: HardhatUserConfig = {
   outputValidator: {
       runOnCompile: true,
       errorMode: true,
-      exclude: ['contracts/test-helpers', 'contracts/test-libraries', "IExampleContract"],
       checks: {
-          title: true,
-          details: false,
-          compilationWarnings: true,
-          missingUserDoc: true,
-          missingDevDoc: true,
+          title: "error",
+          details: "error",
+          params: "error",
+          returns: "error",
+          compilationWarnings: "warning",
+          variables: false,
+          events: false
       },
+      exclude: ['contracts/test-helpers', "IExampleContract"],
   },
 };
 
@@ -92,13 +94,27 @@ Here are all the configuration parameters that are currently available, but as s
 | `runOnCompile`     | True if the plugin should make the checks on every compilation | `true`     |
 | `include` | List of all the contract / interface / library names to include. An empty array will check for everything | `[]` |
 | `exclude` | List of all the contract / interface / library names to exclude. | `[]` |
-| `checks` | Enable/Disable certain checks | `{ title: true, details: true, compilationWarnings: true, missingUserDoc: true, missingDevDoc: true, devDoc:  }` |
-| `checks.devDoc` | Enable/Disable certain checks for the dev docs | `{ events: true, variables: true, functions: true, constructor: true }` |
+| `checks` | Enable/Disable certain checks | `defaultValue = errorMode ? 'error' : 'warning'` <br/><br/>`{ title: default,`<br/>`details: default,`<br/>` compilationWarnings: default,`<br/>` missingUserDoc: default,`<br/>` missingDevDoc: default,`<br/>` events: false,`<br/>` variables: false,`<br/>` functions: default,`<br/>` ctor: false,`<br/>` params: default,`<br/>` returnParams: default,`<br/>` }` |
+
+[comment]: <> (| `checks.devDoc` | Enable/Disable certain checks for the dev docs | `{ events: false, variables: false, functions: true, constructor: true }` |)
+
+## Features
+
+* Dev & User Documentation
+* @param & @return checks
+* Function Overloads
+* Checks in Base Contracts
+* Compilation Warnings
+* Events
+* Config-level ignore
+* Strict mode
 
 ## ⛑ Contribute 
 
 All feedback and contributions are welcome. Feel free to open an issue ! 
 
+### Next Best thing to do: Thorough Testing
 
-- `written for Optimism`
-- `inspired by DoDoc`
+- Written for [Optimism](https://github.com/ethereum-optimism/optimism)
+- Inspired by [DoDoc](https://github.com/primitivefinance/primitive-dodoc)
+
