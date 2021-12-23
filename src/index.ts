@@ -268,29 +268,52 @@ task(TASK_COMPILE, async (args, hre, runSuper) => {
           contractName: string,
           funcName: string
         ): boolean | undefined => {
+          const tryFindFunc = (nodes: any[]) => {
+            const funInfo = nodes.find(
+                (nn: any) => nn.name === funcName
+            )
+            if (funInfo) {
+              ref = funInfo
+            }
+          }
           // sources[contractPath].ast.nodes[]
           // .find(n => n.nodeType === "ContractDefinition")
           // ?.nodes[].find(nn => nn.name === "varName")?.stateVariable
           let ref: any
           buildInfo.forEach((bi) => {
             const key = Object.keys(bi.output.sources).find(
-              (k) => k === filePath
+                (k) => k === filePath
             )
             if (key) {
               const ast = bi.output.sources[key].ast
               if (ast) {
                 const contractDef = ast.nodes?.find(
-                  (n: any) =>
-                    n.nodeType === 'ContractDefinition' &&
-                    n.canonicalName === contractName
+                    (n: any) =>
+                        n.nodeType === 'ContractDefinition' &&
+                        n.canonicalName === contractName
                 )
                 if (contractDef) {
-                  const funInfo = contractDef?.nodes.find(
-                    (nn: any) => nn.name === funcName
-                  )
-                  if (funInfo) {
-                    ref = funInfo
+                  const { baseContracts } = contractDef;
+                  if (baseContracts && baseContracts.length > 0) {
+                    const refIds = baseContracts.map(
+                        (bc: any) => bc.baseName.referencedDeclaration
+                    )
+                    refIds.forEach((refId: number) => {
+                      let baseContractNode;
+                      for (const k in bi.output.sources) {
+                        baseContractNode = bi.output.sources[
+                            k
+                            ].ast?.nodes?.find((n: any) => n.id === refId)
+
+                        if (baseContractNode) {
+                          break;
+                        }
+                      }
+                      tryFindFunc(baseContractNode?.nodes)
+                    })
                   }
+
+                  tryFindFunc(contractDef?.nodes)
                 }
               }
             }

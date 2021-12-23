@@ -1,8 +1,9 @@
 pragma solidity 0.8.10;
 
 import "./IExampleContract.sol";
+import "./BaseContract.sol";
 
-contract ExampleContract is IExampleContract {
+contract ExampleContract is IExampleContract, BaseContract {
     function doSomething(address a, uint256 b) external returns (
         uint256 foo,
         uint256 bar

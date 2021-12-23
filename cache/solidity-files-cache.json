@@ -39,9 +39,46 @@
         "IBar"
       ]
     },
+    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\BaseContract.sol": {
+      "lastModificationDate": 1640248139585,
+      "contentHash": "2a1c676dee501a5bb600b6d5ffa6784a",
+      "sourceName": "contracts/BaseContract.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "BaseContract"
+      ]
+    },
     "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\ExampleContract.sol": {
-      "lastModificationDate": 1640174621012,
-      "contentHash": "32180883e4002affeccf706a8ca11045",
+      "lastModificationDate": 1640248240630,
+      "contentHash": "7690ae19d51b379b49d6389065b92b2f",
       "sourceName": "contracts/ExampleContract.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -69,7 +106,8 @@
         }
       },
       "imports": [
-        "./IExampleContract.sol"
+        "./IExampleContract.sol",
+        "./BaseContract.sol"
       ],
       "versionPragmas": [
         "0.8.10"
