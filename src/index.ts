@@ -374,9 +374,6 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
         // if checks.missingParams ->
         // if func exists in devdoc/userdoc & has params in abi
         // but not in devdoc
-        if (abiEntity.name.includes("set")) {
-          console.log("INCLUDES", devDocEntryFunc);
-        }
         if (!devDocEntryFunc) {
           hasDevDoc = false
         } else {
