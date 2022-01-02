@@ -1,4 +1,18 @@
 import { CompilerOutputContract } from 'hardhat/types'
+import { HardhatUserConfig } from "hardhat/types/config";
+
+export interface HardhatUserConfigExtended extends HardhatUserConfig {
+  outputValidator: PluginConfig
+}
+
+export interface PluginConfig {
+  include: string[]
+  exclude: string[]
+  runOnCompile: boolean
+  errorMode: boolean
+  strict: boolean
+  checks: Checks
+}
 
 export interface Checks {
   title?: Severity // default: errorMode value - true,
@@ -131,7 +145,9 @@ export interface CompilerOutputContractWithDocumentation
 }
 
 export interface CompilerOutputWithDocsAndPath
-  extends CompilerOutputContractWithDocumentation {
+    extends CompilerOutputContractWithDocumentation {
   filePath: string
   fileName: string
 }
+
+export type ErrorObj = { [file: string]: ErrorInfo[] }
