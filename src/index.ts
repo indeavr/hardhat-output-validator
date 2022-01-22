@@ -205,6 +205,3 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
   console.log('✅ All Contracts have been checked for missing Natspec comments')
   // ====== END ======
 }
-
-// check if function name is from external lib ?
-// doesnt start with /contracts
