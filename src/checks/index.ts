@@ -1,64 +1,26 @@
-import { CompilerOutputWithDocsAndPath, ErrorInfo, ErrorType, SeverityLevel, ErrorObj } from "../types";
-import { setupErrors } from "../errors";
-import { checkIsExternalDependency } from "../utils";
-import { checkConstructor } from "./0ctor";
-import { checkEvent } from "./0events";
-import { checkFunction } from "./0funcs";
-import { getConfig } from "../index";
-import { BuildInfo } from "hardhat/types";
+import {
+	CompilerOutputWithDocsAndPath,
+	ErrorInfo,
+	ErrorType,
+	SeverityLevel,
+	ErrorObj,
+} from '../types'
+import { getErrorHandler } from '../errors'
+import { checkIsExternalDependency } from '../utils'
+import { checkConstructor } from './0ctor'
+import { checkEvent } from './0events'
+import { checkFunction } from './0funcs'
+import { getConfig, getFullBuildInfo } from '../index'
+import { BuildInfo } from 'hardhat/types'
 
+export const checkForErrors = (
+	info: CompilerOutputWithDocsAndPath
+): ErrorInfo[] => {
+	const config = getConfig()
+	const buildInfo: BuildInfo[] = getFullBuildInfo()
 
-export class Checker {
-	private buildInfo: BuildInfo[];
-	private contractInfo: CompilerOutputWithDocsAndPath[];
-
-	private errors: ErrorObj;
-
-	constructor(bi: BuildInfo[], ci: CompilerOutputWithDocsAndPath[]) {
-		this.buildInfo = bi;
-		this.contractInfo = ci;
-		this.errors = {};
-	}
-
-	public check = async (): Promise<ErrorObj> => {
-		const errors: ErrorObj = this.contractInfo.reduce((foundErrors, info) => {
-			const docErrors = checkForErrors(info, buildInfo)
-
-			if (docErrors && docErrors.length > 0) {
-				const key = info.filePath + ':' + info.fileName
-				foundErrors[key] = docErrors
-			}
-
-			return foundErrors
-		}, {} as ErrorObj)
-
-		return errors;
-	}
-
-
-}
-
-export const checkForErrors = (info: CompilerOutputWithDocsAndPath): ErrorInfo[] => {
-	const config = getConfig();
-
-	const foundErrors: ErrorInfo[] = []
-	const getErrorText = setupErrors(info.filePath, info.fileName)
-
-	const addError = (
-		errorType: ErrorType,
-		severityLevel: SeverityLevel,
-		extraData?: any
-	) => {
-		const text = getErrorText(errorType, extraData)
-		foundErrors.push({
-			text,
-			severityLevel,
-			type: errorType,
-			at: '',
-			filePath: info.filePath,
-			fileName: info.fileName,
-		})
-	}
+	const errorHandler = getErrorHandler(info.filePath, info.fileName)
+	const { addError, getAll } = errorHandler
 
 	if (config.checks.title && !info.devdoc?.title) {
 		addError(ErrorType.MissingTitle, config.checks.title)
@@ -77,7 +39,8 @@ export const checkForErrors = (info: CompilerOutputWithDocsAndPath): ErrorInfo[]
 			const isExternal = checkIsExternalDependency(
 				info.filePath,
 				info.fileName,
-				entity
+				entity,
+				buildInfo
 			)
 
 			if (isExternal) {
@@ -85,16 +48,16 @@ export const checkForErrors = (info: CompilerOutputWithDocsAndPath): ErrorInfo[]
 			}
 
 			if (entity.type === 'constructor') {
-				checkConstructor(entity)
+				checkConstructor(entity, errorHandler, info)
 			} else if (entity.type === 'event') {
-				checkEvent(entity)
+				checkEvent(entity, errorHandler, info)
 			} else if (entity.type === 'function') {
-				checkFunction(entity)
+				checkFunction(entity, errorHandler, info, buildInfo)
 			}
 		})
 	}
 
 	// TODO: check for userDoc.errors
 
-	return foundErrors
+	return getAll()
 }

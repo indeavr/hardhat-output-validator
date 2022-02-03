@@ -12,7 +12,7 @@ const config: HardhatUserConfig = {
     // strict: true,
     checks: {
       compilationWarnings: false,
-      variables: false,
+      variables: "error",
       events: false,
     },
   },

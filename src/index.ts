@@ -1,7 +1,12 @@
 /* eslint-disable guard-for-in, max-len, no-await-in-loop, no-restricted-syntax */
 import { extendConfig, task } from 'hardhat/config'
 import { TASK_COMPILE } from 'hardhat/builtin-tasks/task-names'
-import { HardhatConfig, HardhatUserConfig, BuildInfo, HardhatRuntimeEnvironment, } from 'hardhat/types'
+import {
+	HardhatConfig,
+	HardhatUserConfig,
+	BuildInfo,
+	HardhatRuntimeEnvironment,
+} from 'hardhat/types'
 import chalk from 'chalk'
 import {
 	CompilerOutputContractWithDocumentation,
@@ -11,7 +16,7 @@ import {
 	PluginConfig,
 } from './types'
 import './type-extensions'
-import { checkForErrors } from './checks/0funcs'
+import { checkForErrors } from './checks'
 import { checkForCompilationWarnings } from './checks/1compWarnings'
 
 extendConfig(
@@ -62,20 +67,20 @@ extendConfig(
 )
 
 task(TASK_COMPILE, async (args, hre, runSuper) => {
-  const config = hre.config.outputValidator
+	const config = hre.config.outputValidator
 
-  // Updates the compiler settings
-  for (const compiler of hre.config.solidity.compilers) {
-    compiler.settings.outputSelection['*']['*'].push('devdoc')
-    compiler.settings.outputSelection['*']['*'].push('userdoc')
-  }
+	// Updates the compiler settings
+	for (const compiler of hre.config.solidity.compilers) {
+		compiler.settings.outputSelection['*']['*'].push('devdoc')
+		compiler.settings.outputSelection['*']['*'].push('userdoc')
+	}
 
-  // Calls the actual COMPILE task
-  await runSuper()
+	// Calls the actual COMPILE task
+	await runSuper()
 
-  if (!config.runOnCompile) {
-    return
-  }
+	if (!config.runOnCompile) {
+		return
+	}
 
 	await run(hre)
 })
@@ -87,11 +92,14 @@ task('validateOutput', async (args, hre) => {
 })
 
 export let getConfig = () => ({} as PluginConfig)
+export let getDefaultSeverity = (): SeverityLevel => 'warning'
+export let getFullBuildInfo = () => [] as BuildInfo[]
 
 const run = async (hre: HardhatRuntimeEnvironment) => {
 	const config = hre.config.outputValidator as PluginConfig
 
 	getConfig = () => config
+	getDefaultSeverity = () => (config.errorMode ? 'error' : 'warning')
 
 	const getBuildInfo = async (
 		qualifiedName: string
@@ -118,6 +126,7 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
 	// ====== Start ======
 	console.log('<<< Starting Output Checks >>> ')
 
+	// Apply filters
 	const allContracts = await hre.artifacts.getAllFullyQualifiedNames()
 	const qualifiedNames = allContracts
 		.filter((str) => str.startsWith('contracts'))
@@ -137,6 +146,8 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
 		await Promise.all(qualifiedNames.map(getBuildInfo))
 	).filter((inf) => inf !== undefined) as BuildInfo[]
 
+	getFullBuildInfo = () => buildInfo
+
 	// (*1) Subset - build.output.contracts[name]
 	const contractBuildInfo: CompilerOutputWithDocsAndPath[] = (
 		await Promise.all(qualifiedNames.map(getContractBuildInfo))
@@ -145,8 +156,9 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
 	// ============ 2.Checks ============
 
 	// (*0) checks
+	console.log('<<< Checking for Errors >>> ')
 	const errors: ErrorObj = contractBuildInfo.reduce((foundErrors, info) => {
-		const docErrors = checkForErrors(info, buildInfo)
+		const docErrors = checkForErrors(info)
 
 		if (docErrors && docErrors.length > 0) {
 			const key = info.filePath + ':' + info.fileName
@@ -157,6 +169,7 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
 	}, {} as ErrorObj)
 
 	// (*1) checks
+	// compilationWarnings
 	if (config.checks.compilationWarnings) {
 		const compErros = checkForCompilationWarnings(
 			buildInfo,
@@ -192,16 +205,16 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
 			}
 		})
 
-    return printedErrors
-  }
+		return printedErrors
+	}
 
-  if (Object.keys(errors).length > 0) {
-    const printedErrors = printErrors()
-    if (printedErrors) {
-      throw new Error('Missing Natspec Comments - Found Errors.')
-    }
-  }
+	if (Object.keys(errors).length > 0) {
+		const printedErrors = printErrors()
+		if (printedErrors) {
+			throw new Error('Missing Natspec Comments - Found Errors.')
+		}
+	}
 
-  console.log('✅ All Contracts have been checked for missing Natspec comments')
-  // ====== END ======
+	console.log('✅ All Contracts have been checked for missing Natspec comments')
+	// ====== END ======
 }

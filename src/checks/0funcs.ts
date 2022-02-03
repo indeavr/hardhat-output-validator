@@ -1,12 +1,22 @@
-import { ErrorType, SeverityLevel } from "../types";
-import { getConfig } from "../index";
-import { checkIfStateVar } from "../utils";
-import { BuildInfo } from "hardhat/types";
-
+import {
+	ErrorType,
+	SeverityLevel,
+	CompilerOutputWithDocsAndPath,
+	ErrorHandler,
+} from '../types'
+import { getConfig, getDefaultSeverity } from '../index'
+import { checkIfStateVar, findByName } from '../utils'
+import { BuildInfo } from 'hardhat/types'
 
 // fullBuildInfo needed for utils.ts checks
-export const checkFunction = (abiEntity: any, fullBuildInfo: BuildInfo[]) => {
-	const config = getConfig();
+export const checkFunction = (
+	abiEntity: any,
+	{ addError }: ErrorHandler,
+	info: CompilerOutputWithDocsAndPath,
+	fullBuildInfo: BuildInfo[]
+) => {
+	const config = getConfig()
+	const defaultSeverity = getDefaultSeverity()
 
 	if (!config.checks.functions && !config.checks.variables) {
 		return
@@ -28,6 +38,7 @@ export const checkFunction = (abiEntity: any, fullBuildInfo: BuildInfo[]) => {
 		}
 	}
 
+	// Check in USER DOC
 	if (
 		config.checks.missingUserDoc &&
 		config.checks.userDoc?.functions &&
@@ -38,45 +49,53 @@ export const checkFunction = (abiEntity: any, fullBuildInfo: BuildInfo[]) => {
 			hasUserDoc = false
 		}
 	}
+
+	// Check in DEV DOC
 	if (
 		config.checks.missingDevDoc &&
 		config.checks.devDoc?.functions &&
 		info.devdoc
 	) {
-		const devDocEntryFunc = findByName(info.devdoc.methods, abiEntity.name)
+		let devDocEntryFunc =
+			findByName(info.devdoc.methods, abiEntity.name)
+
+		// check if variable
+		if (!devDocEntryFunc) {
+			const noBracketName = abiEntity.name.split("(")[0];
+			devDocEntryFunc = findByName(info.devdoc.stateVariables, noBracketName)
+		}
 		// if checks.missingParams ->
 		// if func exists in devdoc/userdoc & has params in abi
 		// but not in devdoc
 		if (!devDocEntryFunc) {
 			hasDevDoc = false
 		} else {
-			if (config.checks.params && abiEntity.inputs.length > 0) {
-				abiEntity.inputs.forEach((param: any, i: number) => {
-					const paramName = param.name || `_${i}`
-					if (!devDocEntryFunc?.params?.[paramName]) {
-						addError(
-							ErrorType.MissingParams,
-							defaultSeverity,
-							`Function: (${abiEntity.name}), param: (${paramName || ''})`
-						)
-					}
-				})
+			const check = (io: 'inputs' | 'outputs') => {
+				const paramsOrReturns = io === 'inputs' ? 'params' : 'returns'
+				const errorType =
+					io === 'inputs'
+						? ErrorType.MissingParams
+						: ErrorType.MissingReturnParams
+
+				if (config.checks[paramsOrReturns] && abiEntity[io].length > 0) {
+					abiEntity[io].forEach((param: any, i: number) => {
+						const paramName = param.name || `_${i}`
+						if (!devDocEntryFunc?.[paramsOrReturns]?.[paramName]) {
+							addError(
+								errorType,
+								defaultSeverity,
+								`Function: (${abiEntity.name}), ${paramsOrReturns.slice(
+									0,
+									-1
+								)}: (${paramName || ''})`
+							)
+						}
+					})
+				}
 			}
-			if (config.checks.returns && abiEntity.outputs.length > 0) {
-				// Check for returns
-				abiEntity.outputs.forEach((param: any, i: number) => {
-					const paramName = param.name || `_${i}`
-					if (!devDocEntryFunc?.returns?.[paramName]) {
-						addError(
-							ErrorType.MissingReturnParams,
-							defaultSeverity,
-							`Function: (${abiEntity.name}), returnParam: (${
-								paramName || ''
-							})`
-						)
-					}
-				})
-			}
+
+			check('inputs')
+			check('outputs')
 		}
 	}
 

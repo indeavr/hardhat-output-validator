@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\Bar.sol": {
-      "lastModificationDate": 1640269486002,
-      "contentHash": "70f9ed7f98ad8f4b9b9a981ddc374915",
+    "/home/indeavr/Projects/Crypto/Projects/hardhat-output-validator/contracts/Bar.sol": {
+      "lastModificationDate": 1643877636938,
+      "contentHash": "865c6621cca4a17a68be831662153b04",
       "sourceName": "contracts/Bar.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -41,8 +41,8 @@
         "IBar"
       ]
     },
-    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\node_modules\\@openzeppelin\\contracts\\access\\Ownable.sol": {
-      "lastModificationDate": 1640263268340,
+    "/home/indeavr/Projects/Crypto/Projects/hardhat-output-validator/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1643876385058,
       "contentHash": "8398972af73b4e9e5ff3b31cad86234f",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
@@ -80,8 +80,8 @@
         "Ownable"
       ]
     },
-    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
-      "lastModificationDate": 1640263268132,
+    "/home/indeavr/Projects/Crypto/Projects/hardhat-output-validator/node_modules/@openzeppelin/contracts/utils/Context.sol": {
+      "lastModificationDate": 1643876385066,
       "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
@@ -117,8 +117,8 @@
         "Context"
       ]
     },
-    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\BaseContract.sol": {
-      "lastModificationDate": 1640248139585,
+    "/home/indeavr/Projects/Crypto/Projects/hardhat-output-validator/contracts/BaseContract.sol": {
+      "lastModificationDate": 1643105085403,
       "contentHash": "2a1c676dee501a5bb600b6d5ffa6784a",
       "sourceName": "contracts/BaseContract.sol",
       "solcConfig": {
@@ -154,8 +154,8 @@
         "BaseContract"
       ]
     },
-    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\ExampleContract.sol": {
-      "lastModificationDate": 1640270815417,
+    "/home/indeavr/Projects/Crypto/Projects/hardhat-output-validator/contracts/ExampleContract.sol": {
+      "lastModificationDate": 1643105085403,
       "contentHash": "a976c9a2db66701c610683b0b045e8ac",
       "sourceName": "contracts/ExampleContract.sol",
       "solcConfig": {
@@ -194,8 +194,8 @@
         "ExampleContract"
       ]
     },
-    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\IExampleContract.sol": {
-      "lastModificationDate": 1639813453764,
+    "/home/indeavr/Projects/Crypto/Projects/hardhat-output-validator/contracts/IExampleContract.sol": {
+      "lastModificationDate": 1643105085403,
       "contentHash": "3a7f2693e4b0385b5e195e181654a7f7",
       "sourceName": "contracts/IExampleContract.sol",
       "solcConfig": {
@@ -231,8 +231,8 @@
         "IExampleContract"
       ]
     },
-    "C:\\Projects\\Crypto\\Projects\\hardhat-output-validator\\contracts\\Foo.sol": {
-      "lastModificationDate": 1639813500271,
+    "/home/indeavr/Projects/Crypto/Projects/hardhat-output-validator/contracts/Foo.sol": {
+      "lastModificationDate": 1643105085403,
       "contentHash": "3367d1ed38146e567c72a1c030786d53",
       "sourceName": "contracts/Foo.sol",
       "solcConfig": {
