@@ -8,11 +8,11 @@ const config: HardhatUserConfig = {
   outputValidator: {
     runOnCompile: true,
     errorMode: true,
-    include: ["Bar"],
+    // include: ["Bar"],
     // strict: true,
     checks: {
       compilationWarnings: false,
-      variables: "error",
+      variables: false,
       events: false,
     },
   },
