@@ -1,3 +1,5 @@
+<p align="center"><img src="https://user-images.githubusercontent.com/176499/96893278-ebc67580-1460-11eb-9530-d5df3a3d65d0.png" alt="Validator"></p>
+
 # Output Validator
 
 ![version](https://img.shields.io/npm/v/hardhat-output-validator)
@@ -5,7 +7,7 @@
 
 Zero-config Hardhat plugin to check the output of the compiler for any problems.
 
-- 🤪 Zero-configuration required
+- ツ Zero-configuration required
 - 🔍 Checks for : [NatSpec](https://docs.soliditylang.org/en/v0.8.9/natspec-format.html) comments & Compilation warnings
 - 🔧 (TODO) Extendable with custom checks
 
