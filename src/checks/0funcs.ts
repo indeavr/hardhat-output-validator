@@ -56,12 +56,11 @@ export const checkFunction = (
 		config.checks.devDoc?.functions &&
 		info.devdoc
 	) {
-		let devDocEntryFunc =
-			findByName(info.devdoc.methods, abiEntity.name)
+		let devDocEntryFunc = findByName(info.devdoc.methods, abiEntity.name)
 
 		// check if variable
 		if (!devDocEntryFunc) {
-			const noBracketName = abiEntity.name.split("(")[0];
+			const noBracketName = abiEntity.name.split('(')[0]
 			devDocEntryFunc = findByName(info.devdoc.stateVariables, noBracketName)
 		}
 		// if checks.missingParams ->

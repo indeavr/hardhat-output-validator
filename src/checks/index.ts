@@ -1,10 +1,4 @@
-import {
-	CompilerOutputWithDocsAndPath,
-	ErrorInfo,
-	ErrorType,
-	SeverityLevel,
-	ErrorObj,
-} from '../types'
+import { CompilerOutputWithDocsAndPath, ErrorInfo, ErrorType } from '../types'
 import { getErrorHandler } from '../errors'
 import { checkIsExternalDependency } from '../utils'
 import { checkConstructor } from './0ctor'
