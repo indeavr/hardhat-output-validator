@@ -37,7 +37,7 @@ export const checkIsExternalDependency = (
 					) {
 						const refId = n.sourceUnit
 
-						let contractDef;
+						let contractDef
 						for (const k in bi.output.sources) {
 							if (bi.output.sources[k].ast?.id === refId) {
 								const defs = bi.output.sources[k].ast.nodes?.filter(

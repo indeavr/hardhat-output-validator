@@ -114,7 +114,7 @@ const run = async (hre: HardhatRuntimeEnvironment) => {
 		const build = await getBuildInfo(qualifiedName)
 		const info = build?.output.contracts[source][
 			name
-			] as CompilerOutputContractWithDocumentation
+		] as CompilerOutputContractWithDocumentation
 
 		return {
 			...info,
