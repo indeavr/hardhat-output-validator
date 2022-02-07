@@ -8,8 +8,8 @@
 Zero-config Hardhat plugin to check the output of the compiler for any problems.
 
 - ツ Zero-configuration required
-- 🔍 Checks for : [NatSpec](https://docs.soliditylang.org/en/v0.8.9/natspec-format.html) comments & Compilation warnings
-- 🔧 (TODO) Extendable with custom checks
+- 🔍 Checks for : [NatSpec](https://docs.soliditylang.org/en/v0.8.9/natspec-format.html) comments & Compilation warnings.
+- 🔧 Extendable with custom checks. (TODO)
 
 ## 📦 Installation
 
@@ -115,7 +115,7 @@ Here are all the configuration parameters that are currently available, but as s
 
 All feedback and contributions are welcome. Feel free to open an issue ! 
 
-### Next Best thing to do: Thorough Testing
+### Next thing on the list: Unit tests.
 
 - Written for [Optimism](https://github.com/ethereum-optimism/optimism)
 - Inspired by [DoDoc](https://github.com/primitivefinance/primitive-dodoc)
