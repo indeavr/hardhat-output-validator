@@ -6,6 +6,7 @@ import { checkEvent } from './0events'
 import { checkFunction } from './0funcs'
 import { getConfig, getFullBuildInfo } from '../index'
 import { BuildInfo } from 'hardhat/types'
+import { FormatTypes, FunctionFragment } from 'ethers/lib/utils'
 
 export const checkForErrors = (
 	info: CompilerOutputWithDocsAndPath
@@ -26,10 +27,16 @@ export const checkForErrors = (
 	if (Array.isArray(info.abi)) {
 		// Loops through the abi and for each function/event/var check in the user/dev doc.
 		info.abi.forEach((entity) => {
-			entity.name = `${entity.name}(${
-				entity.inputs ? entity.inputs.map((i: any) => i.type).join(',') : ''
-			})`
-
+			if (entity.type === 'function') {
+				const signature = FunctionFragment.from(entity).format(
+					FormatTypes.sighash
+				)
+				entity.name = signature
+			} else {
+				entity.name = `${entity.name}(${
+					entity.inputs ? entity.inputs.map((i: any) => i.type).join(',') : ''
+				})`
+			}
 			const isExternal = checkIsExternalDependency(
 				info.filePath,
 				info.fileName,
