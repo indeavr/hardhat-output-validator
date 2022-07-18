@@ -15,6 +15,8 @@ interface IBar {
 		address paramB;
 	}
 
+	/// QWEQWEQWE
+	/// @param t the pair to set
 	function set(T memory t) external;
 
 	function boop(uint256 bar) external;
@@ -43,7 +45,6 @@ contract Bar is IBar, Ownable {
 	mapping(address => uint) public buyerAmounts;
 
 
-	/// @inheritdoc IBar
 	function set(T memory t) external {}
 
 	/// @notice Cool function bro
